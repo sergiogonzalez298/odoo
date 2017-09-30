@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     "name": "Módulo base de Contabilidad Argentina",
-    'version': '9.0.1.12.0',
+    'version': '9.0.1.19.0',
     'category': 'Localization/Argentina',
     'sequence': 14,
     'author': 'ADHOC SA,Moldeo Interactive',
@@ -11,6 +11,10 @@
         'account_document',
         'l10n_ar_partner',
         'l10n_ar_bank',
+        # agregamos esta dependencia ya que el fix que hace ese modulo
+        # es fundamental para que el importa base de los impuestos se calcule
+        # bien en los reembolsos.
+        'account_fix',
         # para guardar el link entre facturas y NC
         # el modulo tiene errores en los test (probado solo con odoo y tmb)
         # 'account_invoice_refund_link',
@@ -28,6 +32,7 @@
         'data/base_validator_data.xml',
         'data/afip_responsability_type.xml',
         'data/account_document_letter.xml',
+        # los cargamos con csv pero los hacemos no actualizables con un hook
         'data/account.document.type.csv',
         'data/afip_incoterm.xml',
         'data/res_country_afip_code.xml',
@@ -39,8 +44,8 @@
         'data/res_country_group_data.xml',
         'data/res_company_data.xml',
         'data/afip_vat_f2002_category_data.xml',
+        'data/account_account_tag.xml',
         # TODO analizar y migrar
-        # data_account_type
         # 'data/account_financial_report_data.xml',
         # 'data/account_payment_term.xml',
         'report/account_ar_vat_line_view.xml',

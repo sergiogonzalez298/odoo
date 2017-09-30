@@ -18,6 +18,9 @@ class ResPartner(models.Model):
     cuit = fields.Char(
         compute='_compute_cuit',
     )
+    formated_cuit = fields.Char(
+        compute='_compute_formated_cuit',
+    )
     # no podemos hacerlo asi porque cuando se pide desde algun lugar
     # quiere computar para todos los partners y da error para los que no
     # tienen por mas que no lo pedimos
@@ -42,6 +45,18 @@ class ResPartner(models.Model):
             raise UserError(_('No CUIT cofigured for partner %s') % (
                 self.name))
         return self.cuit
+
+    @api.multi
+    @api.depends(
+        'cuit',
+    )
+    def _compute_formated_cuit(self):
+        for rec in self:
+            if not rec.cuit:
+                continue
+            cuit = rec.cuit
+            rec.formated_cuit = "{0}-{1}-{2}".format(
+                cuit[0:2], cuit[2:10], cuit[10:])
 
     @api.one
     @api.depends(
@@ -110,3 +125,21 @@ class ResPartner(models.Model):
                 return recs.name_get()
         return super(ResPartner, self).name_search(
             name, args=args, operator=operator, limit=limit)
+
+    @api.multi
+    def update_partner_data_from_afip(self):
+        """
+        Funcion que llama al wizard para actualizar data de partners desde afip
+        sin abrir wizard.
+        Podríamos mejorar  pasando un argumento para sobreescribir o no valores
+        que esten o no definidos
+        Podriamos mejorarlo moviento lógica del wizard a esta funcion y que el
+        wizard use este método.
+        """
+
+        for rec in self:
+            wiz = rec.env[
+                'res.partner.update.from.padron.wizard'].with_context(
+                active_ids=rec.ids, active_model=rec._name).create({})
+            wiz.change_partner()
+            wiz.update_selection()
