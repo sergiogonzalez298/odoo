@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_type_capital" model="account.account.type">
+        <field name="name">Capital</field>
+        <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record id="account_type_tax" model="account.account.type">
+        <field name="name">Tax</field>
+        <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record id="account_type_stock" model="account.account.type">
+        <field name="name">Existencias</field>
+        <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record id="account_type_terceros" model="account.account.type">
+        <field name="name">Terceros</field>
+        <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record id="account_type_financieras" model="account.account.type">
+        <field name="name">Financieras</field>
+        <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record id="account_type_gastos_neto" model="account.account.type">
+        <field name="name">Gastos patrimonio neto</field>
+        <field name="include_initial_balance" eval="True"/>
+    </record>
+    <record id="account_type_ingresos_neto" model="account.account.type">
+        <field name="name">Ingresos patrimonio neto</field>
+        <field name="include_initial_balance" eval="True"/>
+    </record>
+
+</odoo>
